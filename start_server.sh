@@ -29,4 +29,4 @@ echo "✅ Ollama is running"
 
 # Start FastAPI server
 echo "🔥 Starting FastAPI server..."
-uvicorn main:app --reload --host 0.0.0.0 --port 8000
+uvicorn main:app --reload --host 0.0.0.0 --port 8001

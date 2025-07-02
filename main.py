@@ -280,13 +280,7 @@ async def get_indices():
         404: {"description": "Index not found"}
     }
 )
-async def get_mapping(
-    index: str = Field(
-        ...,
-        description="Name of the Elasticsearch index",
-        example="kibana_sample_data_ecommerce"
-    )
-):
+async def get_mapping(index: str):
     """
     **Get Index Field Mapping**
     
@@ -507,10 +501,7 @@ async def execute_query(request: QueryRequest):
         500: {"description": "Validation service error"}
     }
 )
-async def validate_dsl(
-    index: str = Field(..., description="Target index name"),
-    dsl_query: Dict[str, Any] = Field(..., description="Elasticsearch DSL query to validate")
-):
+async def validate_dsl(index: str, dsl_query: Dict[str, Any]):
     """
     **Validate Elasticsearch DSL Query**
     
