@@ -26,14 +26,18 @@ class ElasticsearchClient:
     def _create_connection(self) -> Elasticsearch:
         """Create Elasticsearch connection using environment variables"""
         try:
-            es = Elasticsearch(
-                f"https://{os.getenv('ES_HOST', 'localhost')}:{os.getenv('ES_PORT', 9200)}",
-                basic_auth=(os.getenv('ES_USERNAME'), os.getenv('ES_PASSWORD')),
-                ca_certs=os.getenv('ES_CA_CERT'),
-                verify_certs=True,
-                request_timeout=30,
-                retry_on_timeout=True
-            )
+            # Configure connection parameters
+            config = {
+                "hosts": [f"https://{os.getenv('ES_HOST', 'localhost')}:{os.getenv('ES_PORT', 9200)}"],
+                "basic_auth": (os.getenv('ES_USERNAME'), os.getenv('ES_PASSWORD')),
+                "verify_certs": True,
+            }
+            
+            # Add CA certificate if provided
+            if os.getenv('ES_CA_CERT'):
+                config["ca_certs"] = os.getenv('ES_CA_CERT')
+            
+            es = Elasticsearch(**config)
             return es
         except Exception as e:
             logger.error(f"Failed to create Elasticsearch connection: {e}")
