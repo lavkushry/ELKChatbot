@@ -31,7 +31,7 @@ class ElasticsearchClient:
                 basic_auth=(os.getenv('ES_USERNAME'), os.getenv('ES_PASSWORD')),
                 ca_certs=os.getenv('ES_CA_CERT'),
                 verify_certs=True,
-                timeout=30,
+                request_timeout=30,
                 retry_on_timeout=True
             )
             return es
